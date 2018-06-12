@@ -9,6 +9,8 @@ import { store } from './store'
 import DateFilter from './filters/date'
 import 'vuetify/dist/vuetify.min.css'
 import AlertCmp from './components/Shared/Alert'
+import EditGameCmp from './components/Games/Edit/EditGameDetails'
+import FollowGame from './components/Games/Follow/FollowDialog'
 
 Vue.use(Vuetify, {
   theme: {
@@ -26,6 +28,8 @@ Vue.config.productionTip = false
 
 Vue.filter('date', DateFilter)
 Vue.component('app-alert', AlertCmp)
+Vue.component('app-edit-game-details', EditGameCmp)
+Vue.component('app-follow-game', FollowGame)
 
 /* eslint-disable no-new */
 new Vue({
@@ -40,11 +44,12 @@ new Vue({
       authDomain: 'crackbros-95873.firebaseapp.com',
       databaseURL: 'https://crackbros-95873.firebaseio.com',
       projectId: 'crackbros-95873',
-      storageBucket: ''
+      storageBucket: 'gs://crackbros-95873.appspot.com'
     })
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.dispatch('autoSignIn', user)
+        this.$store.dispatch('fetchUserData')
       }
     })
     this.$store.dispatch('loadGames')

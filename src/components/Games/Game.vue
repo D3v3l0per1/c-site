@@ -1,15 +1,31 @@
 <template>
   <v-container>
-    <v-layout row wrap>
+    <v-layout row wrap v-if="loading">
+      <v-flex xs12 class="text-xs-center">
+        <v-progress-circular indeterminate color="primary" size="50" v-if="loading"></v-progress-circular>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap v-else>
       <v-flex xs12 sm10 offset-sm1 md8 offset-md2>
         <v-card>
           <v-card-title>
             <h1 class="primary--text">{{ game.title }}</h1>
+            <template v-if="true">
+              <v-spacer></v-spacer>
+              <app-edit-game-details :game="game"></app-edit-game-details>
+            </template>
           </v-card-title>
           <v-card-media :src="game.imageUrl" height="400px"></v-card-media>
           <v-card-text>
             <div>
-              <p>{{ game.date | date }} - {{ game.tag }}</p> <!-- Some Tags/Genre -->
+              <v-layout row>
+                <v-flex xs10>
+                  <p><strong>Posted at </strong>{{ game.date | date }} <strong>by</strong> {{ game.tag }}</p> <!-- Some Tags/Genre -->
+                </v-flex>
+                <v-flex xs2>
+                  <app-follow-game :gameId="game.id" v-if="userIsAuthenticated && !userIsCreator"></app-follow-game>
+                </v-flex>
+              </v-layout>
               <!-- <p>{{ game.description }}</p> -->
             </div>
           </v-card-text>
@@ -104,6 +120,18 @@ export default {
   computed: {
     game () {
       return this.$store.getters.loadedGame(this.id)
+    },
+    userIsAuthenticated () {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    },
+    userIsCreator () {
+      if (!this.userIsAuthenticated) {
+        return false
+      }
+      return this.$store.getters.user.id === this.$store.getters.user.creatorId
+    },
+    loading () {
+      return this.$store.getters.loading
     }
   }
 }

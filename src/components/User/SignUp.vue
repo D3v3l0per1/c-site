@@ -11,19 +11,33 @@
           <v-card-text>
             <v-container>
               <form @submit.prevent='onsignUp'>
-                <v-layout row>
+                <v-layout row wrap>
+                  <v-flex xs12 class="mb-4">
+                    <h1 class="primary--text headline">Sign Up </h1>
+                    <hr class="primary">
+                  </v-flex>
                   <v-flex xs12>
-                    <v-text-field name='email' label='Mail' id='email' v-model='email' type='email' required></v-text-field>
+                    <v-layout row wrap>
+                      <v-flex xs12>
+                        <v-text-field name='username' label='Username' id='username' v-model='username' type='input' autocomplete="off" required></v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-text-field name='email' label='Email' id='email' v-model='email' type='email' required></v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-text-field name='confirmEmail' label='Confirm Email' id='confirmEmail' v-model='confirmEmail' autocomplete="off" type='email' :rules="[compareEmails]"></v-text-field>
+                      </v-flex>
+                    </v-layout>
                   </v-flex>
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-text-field name='password' label='Password' id='password' v-model='password' type='password' required></v-text-field>
+                    <v-text-field name='password' label='Password' id='password' v-model='password' type='password' autocomplete="off" required></v-text-field>
                   </v-flex>
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-text-field name='confirmPassword' label='Confirm Password' id='confirmPassword' v-model='confirmPassword' type='password' :rules='[comparePasswords]'></v-text-field>
+                    <v-text-field name='confirmPassword' label='Confirm Password' id='confirmPassword' v-model='confirmPassword' type='password' autocomplete="off" :rules='[comparePasswords]'></v-text-field>
                   </v-flex>
                 </v-layout>
                 <v-layout row>
@@ -46,14 +60,19 @@
 export default {
   data () {
     return {
+      username: '',
       email: '',
+      confirmEmail: '',
       password: '',
       confirmPassword: ''
     }
   },
   computed: {
     comparePasswords () {
-      return this.password !== this.confirmPassword ? 'Passwords do not match' : ''
+      return this.password !== this.confirmPassword ? 'Passwords doesn\'t match' : ''
+    },
+    compareEmails () {
+      return this.email !== this.confirmEmail ? 'Emails doesn\'t match' : ''
     },
     user () {
       return this.$store.getters.user

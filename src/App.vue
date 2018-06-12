@@ -3,9 +3,9 @@
 
     <v-navigation-drawer v-model="sideNav" temporary fixed>
       <v-list>
-        <v-list-tile v-for="item in NavMenuItems" :key="item.title">
+        <v-list-tile v-for="item in NavMenuItems" :key="item.title" router :to="item.link">
           <v-list-tile-action>
-            <v-icon>supervisor_account</v-icon>
+            <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>{{ item.title }}</v-list-tile-content>
         </v-list-tile>
@@ -64,7 +64,7 @@ export default {
           { icon: '', title: 'Games', link: '/games' },
           { icon: '', title: 'Software', link: '/software' },
           { icon: '', title: 'Movies', link: '/movies' },
-          { icon: '', title: 'Profile', link: '/profile' }
+          { icon: 'face', title: 'Profile', link: '/profile' }
         ]
       }
       return NavMenuItems
