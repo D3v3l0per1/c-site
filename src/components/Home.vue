@@ -75,6 +75,7 @@
                     <div>
                       <h3 class="red--text">{{ game.title }}</h3>
                       <div>{{ game.date | date }}</div>
+                      
                     </div>
                   </v-card-title> -->
                   <v-card-text>

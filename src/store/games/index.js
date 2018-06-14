@@ -8,7 +8,7 @@ export default {
         id: 'eb45ibegie4b',
         title: 'The Test Post 1',
         date: new Date(),
-        tag: 'Adventure or so',
+        genre: 'Adventure or so',
         description: 'lorem ipsum dlolrosn lseb lubseaolirfdsfgsdfg kjusdv uasdvf u asd fouasvf iadsörgasldifgalidsufgioagoliaghf 834g3  '
       },
       {
@@ -16,7 +16,7 @@ export default {
         id: 'izv43izfuvds',
         title: 'The Post 2',
         date: new Date(),
-        tag: 'Lolsai iausdbf jaa dsj',
+        genre: 'Lolsai iausdbf jaa dsj',
         description: 'lorem ipsum dlolrosn lseb lubseaolirf  ouafszgkuw434'
       }
     ]
@@ -51,6 +51,7 @@ export default {
           games.push({
             id: key,
             title: obj[key].title,
+            genre: obj[key].genre,
             description: obj[key].description,
             imageUrl: obj[key].imageUrl,
             date: obj[key].date,
@@ -71,7 +72,7 @@ export default {
     createGame ({commit, getters}, payload) {
       const game = {
         title: payload.title,
-        tag: payload.tag,
+        genre: payload.genre,
         imageUrl: payload.imageUrl,
         description: payload.description,
         date: payload.date.toISOString(),

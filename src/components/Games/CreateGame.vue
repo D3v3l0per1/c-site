@@ -16,7 +16,42 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field name="tag" label="Tags" id="tag" v-model="tag" required></v-text-field>
+              <v-layout row wrap>
+                <v-flex xs12 sm6 class="pr-1">
+                  <v-menu
+                    ref="menu1"
+                    :close-on-content-click="false"
+                    v-model="menu1"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    max-width="290px"
+                    min-width="290px"
+                  >
+                    <v-text-field
+                      slot="activator"
+                      v-model="releaseDate"
+                      label="Date"
+                      hint="MM/DD/YYYY format"
+                      persistent-hint
+                      prepend-icon="event"
+                      @blur="releaseDate = parseDate(dateFormatted)"
+                    ></v-text-field>
+                    <v-date-picker v-model="releaseDate" no-title @input="menu1 = false"></v-date-picker>
+                  </v-menu>
+                  <!-- <v-text-field name="releaseDate" label="releaseDate" id="releaseDate" v-model="releaseDate" required></v-text-field> -->
+                </v-flex>
+                <v-flex xs12 sm6 class="pl-1">
+                  <v-text-field name="crackDate" label="crackDate" id="crackDate" v-model="crackDate" required></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-text-field name="genres" label="genre" id="genre" v-model="genre" required></v-text-field>
             </v-flex>
           </v-layout>
           <v-layout row>
@@ -55,10 +90,12 @@
 export default {
   data () {
     return {
+      menu1: false,
       title: '',
-      tag: '',
+      genre: '',
       imageUrl: '',
       description: '',
+      releaseDate: new Date(),
       date: new Date(),
       time: new Date()
       // image: null
@@ -92,11 +129,12 @@ export default {
       // }
       const gameData = {
         title: this.title,
-        tag: this.tag,
+        genre: this.genre,
         imageUrl: this.imageUrl,
         // image: this.image,
         description: this.description,
-        date: this.submittableDateTime
+        date: this.submittableDateTime,
+        releaseDate: this.releaseDate
       }
       this.$store.dispatch('createGame', gameData)
       this.$router.push('/games')
