@@ -117,6 +117,7 @@ export default {
         date.setMinutes(this.time.getMinutes())
       }
       return date
+      
     }
   },
   methods: {
