@@ -29,7 +29,7 @@
               <!-- <p>{{ game.description }}</p> -->
             </div>
           </v-card-text>
-          <!-- <v-tabs fixed-tabs slider-color="red">
+          <v-tabs fixed-tabs slider-color="red">
             <v-tab>Info</v-tab>
             <v-tab-item>
               <v-container>
@@ -107,7 +107,7 @@
               </v-container>
             </v-tab-item>
             <v-tab>NFO</v-tab>
-          </v-tabs> -->
+          </v-tabs>
         </v-card>
       </v-flex>
     </v-layout>

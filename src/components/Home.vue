@@ -25,7 +25,7 @@
         <v-layout row wrap v-if="!loading">
           <v-flex xs12>
             <v-carousel>
-              <v-carousel-item v-for="game in games" :src="game.imageUrl" :key="game.id" @click.native="onLoadGame(game.id)">
+              <v-carousel-item v-for="game in featuredGames" :src="game.imageUrl" :key="game.id" @click.native="onLoadGame(game.id)">
                 <div class="title">
                   {{ game.title }}
                 </div>
@@ -42,7 +42,10 @@
                 <h1 class="headline">Latest Cracked Games</h1>
                 <v-divider class="mb-2"></v-divider>
               </v-flex>
-              <v-flex xs12 md6 class="pt-1 pr-1 pb-1 pl-1" v-for="game in games" :key="game.id">
+              <v-flex xs12 class="text-xs-center">
+                <v-progress-circular indeterminate color="primary" size="50" v-if="loading"></v-progress-circular>
+              </v-flex>
+              <v-flex xs12 md6 class="pt-1 pr-1 pb-1 pl-1" v-for="game in latestCrackedGames" :key="game.id" v-if="!loading">
                 <v-card>
                   <v-card-media :src="game.imageUrl" height="150px" style="cursor: pointer;" @click.native="onLoadGame(game.id)"></v-card-media>
                   <!-- <v-card-title>
@@ -61,14 +64,17 @@
             </v-layout>
           </v-flex>
 
-          <!-- Latest Cracked Games -->
+          <!-- Latest Uncracked Games -->
           <v-flex xs12 sm6 class="pr-2">
             <v-layout row wrap>
               <v-flex xs12>
                 <h1 class="headline">Latest Uncracked Games</h1>
                 <v-divider class="mb-2"></v-divider>
               </v-flex>
-              <v-flex xs12 md6 class="pt-1 pr-1 pb-1 pl-1" v-for="game in games" :key="game.id">
+              <v-flex xs12 class="text-xs-center">
+                <v-progress-circular indeterminate color="primary" size="50" v-if="loading"></v-progress-circular>
+              </v-flex>
+              <v-flex xs12 md6 class="pt-1 pr-1 pb-1 pl-1" v-for="game in latestUncrackedGames" :key="game.id" v-if="!loading">
                 <v-card>
                   <v-card-media :src="game.imageUrl" height="150px" style="cursor: pointer;" @click.native="onLoadGame(game.id)"></v-card-media>
                   <!-- <v-card-title>
@@ -88,6 +94,7 @@
             </v-layout>
           </v-flex>
 
+          <!-- Upcoming Games -->
           <v-flex xs12 class="mt-3">
             <v-layout row wrap>
               <v-flex xs12>
@@ -96,7 +103,10 @@
               </v-flex>
               <v-flex xs12>
                 <v-layout row wrap>
-                  <v-flex xs12 sm3 class="pt-1 pr-1 pb-1 pl-1" v-for="game in games" :key="game.id">
+                  <v-flex xs12 class="text-xs-center">
+                    <v-progress-circular indeterminate color="primary" size="50" v-if="loading"></v-progress-circular>
+                  </v-flex>
+                  <v-flex xs12 sm3 class="pt-1 pr-1 pb-1 pl-1" v-for="game in latestUpComingGames" :key="game.id" v-if="!loading">
                     <v-card>
                       <v-card-media :src="game.imageUrl" height="150px"></v-card-media>
                       <v-card-text>
@@ -120,8 +130,17 @@
 <script>
 export default {
   computed: {
-    games () {
+    featuredGames () {
       return this.$store.getters.featuredGames
+    },
+    latestCrackedGames () {
+      return this.$store.getters.latestCrackedGames
+    },
+    latestUncrackedGames () {
+      return this.$store.getters.latestUncrackedGames
+    },
+    latestUpComingGames () {
+      return this.$store.getters.latestUpComingGames
     },
     loading () {
       return this.$store.getters.loading

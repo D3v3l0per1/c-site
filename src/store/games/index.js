@@ -161,6 +161,15 @@ export default {
     featuredGames (state, getters) {
       return getters.loadedGames.slice(0, 5)
     },
+    latestUncrackedGames (state, getters) {
+      return getters.loadedGames.slice(0, 4)
+    },
+    latestCrackedGames (state, getters) {
+      return getters.loadedGames.slice(0, 4)
+    },
+    latestUpComingGames (state, getters) {
+      return getters.loadedGames.slice(0, 4)
+    },
     loadedGame (state) {
       return (gameId) => {
         return state.loadedGames.find((game) => {

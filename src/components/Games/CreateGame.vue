@@ -17,7 +17,7 @@
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
               <v-layout row wrap>
-                <v-flex xs12 sm6 class="pr-1">
+                <v-flex xs12 lg6>
                   <v-menu
                     ref="menu1"
                     :close-on-content-click="false"
@@ -32,17 +32,18 @@
                   >
                     <v-text-field
                       slot="activator"
-                      v-model="releaseDate"
+                      v-model="releaseDateFormated"
                       label="Date"
                       hint="MM/DD/YYYY format"
                       persistent-hint
                       prepend-icon="event"
-                      @blur="releaseDate = parseDate(dateFormatted)"
+                      @blur="releaseDate = parseDate(releaseDateFormated)"
                     ></v-text-field>
                     <v-date-picker v-model="releaseDate" no-title @input="menu1 = false"></v-date-picker>
                   </v-menu>
-                  <!-- <v-text-field name="releaseDate" label="releaseDate" id="releaseDate" v-model="releaseDate" required></v-text-field> -->
+                  <p>Date in ISO format: <strong>{{ releaseDate }}</strong></p>
                 </v-flex>
+
                 <v-flex xs12 sm6 class="pl-1">
                   <v-text-field name="crackDate" label="crackDate" id="crackDate" v-model="crackDate" required></v-text-field>
                 </v-flex>
@@ -95,7 +96,8 @@ export default {
       genre: '',
       imageUrl: '',
       description: '',
-      releaseDate: new Date(),
+      releaseDate: null,
+      releaseDateFormated: null,
       date: new Date(),
       time: new Date()
       // image: null
@@ -117,10 +119,29 @@ export default {
         date.setMinutes(this.time.getMinutes())
       }
       return date
-      
+    },
+    computedReleaseDateFormatted () {
+      return this.formatDate(this.releaseDate)
+    }
+  },
+  watch: {
+    releaseDate (val) {
+      return this.releaseDateFormated = this.formatDate(this.releaseDate)
     }
   },
   methods: {
+    formatDate (releaseDate) {
+      if (!releaseDate) return null
+
+      const [year, month, day] = releaseDate.split('-')
+      return `${month}/${day}/${year}`
+    },
+    parseDate (releaseDate) {
+      if (!releaseDate) return null
+
+      const [month, day, year] = releaseDate.split('-')
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+    },
     onCreateGame () {
       if (!this.formIsValid) {
         return
